@@ -1,5 +1,5 @@
 import Header from './components/Header';
-import AboutPage from './components/About';
+import About from './components/About';
 
 function App() {
     const currentPage = window.location.pathname;
@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Header />
-            {currentPage === '/' && <AboutPage />}
+            {currentPage === '/' && <About />}
             {/* Add conditions for other pages here */}
         </div>
     );
