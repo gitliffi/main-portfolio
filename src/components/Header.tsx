@@ -6,9 +6,10 @@ const HeaderWrapper = styled.header`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
+    height: 100px;
 `;
 
 const HomeTitle = styled.h1`
