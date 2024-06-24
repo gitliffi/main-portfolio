@@ -2,9 +2,7 @@ import styled from "styled-components";
 
 const AboutWrapper = styled.div`
     margin-top: 120px;
-    min-width: 100vw;
     padding: 4em;
-    min-height: 100vh;
 `;
 
 const AboutTitle = styled.h2`
