@@ -1,18 +1,22 @@
 import Header from './components/Header';
 import About from './components/About';
 import GlobalStyles from "./styles/GlobalStyles.tsx";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 function App() {
-    const currentPage = window.location.pathname;
 
     return (
         <>
             <GlobalStyles/>
-            <div className="App">
-                <Header/>
-                {currentPage === '/' && <About/>}
-                {/* Add conditions for other pages here */}
-            </div>
+            <Router>
+                <div className="App">
+                    <Header/>
+                    <Routes>
+                        <Route path="/" Component={About}/> {/* No longer needs exact */}
+                        <Route path="/about" Component={About}/>
+                    </Routes>
+                </div>
+            </Router>
         </>
     );
 }
