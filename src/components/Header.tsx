@@ -1,5 +1,7 @@
 // src/components/Header.tsx
 import styled from 'styled-components';
+import { useEffect, useRef } from "react";
+import { useLocation } from 'react-router-dom';
 
 const HeaderWrapper = styled.header`
     display: flex;
@@ -9,12 +11,19 @@ const HeaderWrapper = styled.header`
     position: fixed;
     width: 100%;
     top: 0;
-    height: 100px;
+    height: 130px;
+    background-color: #ffffff;
+    transition: transform 0.3s ease-out;
+
+    &.hide-header {
+        transform: translateY(-100%);
+    }
 `;
 
 const HomeTitle = styled.h1`
-  font-size: 48px; /* Adjust the font size as needed */
-  margin-bottom: 20px;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
 `;
 
 const NavLinks = styled.nav`
@@ -23,21 +32,46 @@ const NavLinks = styled.nav`
   width: 100%;
 `;
 
-const NavLink = styled.a`
-  color: black;
-  text-decoration: none;
-  margin: 0 10px;
+// Modified NavLink component to accept isActive prop
+const NavLink = styled.a<{ isActive?: boolean }>`
+    color: ${({ isActive }) => (isActive? 'black' : 'gray')};
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: ${props => (props.isActive? 'bold' : 'normal')}; // Conditionally bold based on isActive prop
 `;
 
-const Header = () => {
+const Header = () => { // Destructure location from props
+    const headerRef = useRef<HTMLDivElement | null>(null);
+    const location = useLocation();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const showHeader = window.scrollY < 130;
+            const headerElement = headerRef.current;
+            if (headerElement) {
+                headerElement.classList.toggle("hide-header",!showHeader);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    // Determine if the NavLink is active
+    const isActive = (path: string) => {
+        return location.pathname === path;
+    };
+
     return (
-        <HeaderWrapper>
+        <HeaderWrapper ref={headerRef}>
             <HomeTitle>BLOGLIFFI</HomeTitle>
             <NavLinks>
-                <NavLink href="/projects">Projects</NavLink>
-                <NavLink href="/blog">Blog</NavLink>
-                <NavLink href="/album">Album</NavLink>
-                <NavLink href="/about">About</NavLink>
+                <NavLink href="/projects" isActive={isActive('/projects')}>Projects</NavLink>
+                <NavLink href="/blog" isActive={isActive('/blog')}>Blog</NavLink>
+                <NavLink href="/album" isActive={isActive('/album')}>Album</NavLink>
+                <NavLink href="/about" isActive={isActive('/about') || isActive('/')}>About</NavLink>
             </NavLinks>
         </HeaderWrapper>
     );
