@@ -3,7 +3,6 @@ import styled from "styled-components";
 const AboutWrapper = styled.div`
     margin-top: 120px;
     padding: 6em;
-    height: 100vh;
 `;
 
 const AboutTitle = styled.h2`
