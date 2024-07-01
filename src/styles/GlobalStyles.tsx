@@ -66,6 +66,15 @@ const GlobalStyles = createGlobalStyle`
         }
     }
 
+    @media (prefers-color-scheme: dark) {
+        :root {
+            /* Colors for dark mode */
+            color: #000; /* Black text */
+            background-color: #fff; /* White background */
+        }
+    }
+
+
     @import url('https://rsms.me/inter/inter.css');
 
     body {
